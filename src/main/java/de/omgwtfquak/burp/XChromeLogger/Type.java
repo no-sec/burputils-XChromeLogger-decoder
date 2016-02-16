@@ -1,5 +1,10 @@
 package de.omgwtfquak.burp.XChromeLogger;
 
+/**
+ * Different types of XChromeLogger data
+ * 
+ * @author marko
+ */
 public enum Type {
   LOG("log"), WARN("warn"), ERROR("error"), INFO("info");
 

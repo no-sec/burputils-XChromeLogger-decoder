@@ -13,6 +13,12 @@ import de.omgwtfquak.burp.XChromeLogger.XChromeLoggerStruct;
 
 public class JsonUtil {
 
+  /**
+   * Parse json data from a XChromeLogger data to build {@link XChromeLogger}
+   * 
+   * @param content
+   * @return
+   */
   public static XChromeLogger parseXChromeLoggerJsonFromString(final String content) {
 
     JSONParser parser = new JSONParser();

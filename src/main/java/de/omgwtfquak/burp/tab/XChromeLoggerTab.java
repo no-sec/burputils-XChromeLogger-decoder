@@ -8,22 +8,27 @@ import burp.IBurpExtenderCallbacks;
 import burp.IExtensionHelpers;
 import burp.IMessageEditorController;
 import burp.IMessageEditorTab;
+import burp.IRequestInfo;
 import de.omgwtfquak.burp.XChromeLogger.XChromeLogger;
 import de.omgwtfquak.burp.XChromeLogger.XChromeLoggerComponent;
+import de.omgwtfquak.burp.XChromeLogger.XChromeLoggerStruct;
 import de.omgwtfquak.burp.common.Logger;
 import de.omgwtfquak.utils.JsonUtil;
 
+/**
+ * {@link XChromeLoggerTab} implements an new {@link IMessageEditorTab} which builds a new HTTP message editor to display {@link XChromeLoggerStruct}
+ * 
+ * @author marko
+ */
 public class XChromeLoggerTab implements IMessageEditorTab {
 
-  private final boolean editable;
   private final IExtensionHelpers helpers;
   private final XChromeLoggerComponent component;
   private final Logger LOG;
   private final IBurpExtenderCallbacks callbacks;
 
   /**
-   * Standard Konstrukter, welcher den {@link IMessageEditorController} und {@link IBurpExtenderCallbacks} uebergibt, um die enstprechenden Interfaces
-   * nachzuholen
+   * constructor
    * 
    * @param controller
    * @param callbacks
@@ -31,8 +36,6 @@ public class XChromeLoggerTab implements IMessageEditorTab {
    */
   public XChromeLoggerTab(IMessageEditorController controller, IBurpExtenderCallbacks callbacks, boolean editable) {
 
-    this.editable = editable;
-    // FIXME Debug
     Object[] columns = { "Logger Data", "Class", "Line" };
     XChromeLoggerComponent component = new XChromeLoggerComponent(columns);
     this.component = component;
@@ -82,7 +85,7 @@ public class XChromeLoggerTab implements IMessageEditorTab {
   }
 
   /**
-   * Check if the HTTP Response Header contains XChromeLoggerData
+   * check whether HTTP response header contains XChromeLoggerData
    * 
    * @param content
    *          Http Response as Byte Stream
@@ -96,6 +99,13 @@ public class XChromeLoggerTab implements IMessageEditorTab {
     return false;
   }
 
+  /**
+   * extract base64 encoded XChromeLoggerData from {@link IRequestInfo} as {@link Byte} array
+   * 
+   * @param content
+   *          {@link IRequestInfo} as {@link Byte} array
+   * @return base64 decoded XChromeLoggerData
+   */
   private byte[] extractXChromeLoggerData(final byte[] content) {
     for (String header : helpers.analyzeResponse(content).getHeaders())
       if (StringUtils.contains(header, "X-ChromeLogger-Data:")) {

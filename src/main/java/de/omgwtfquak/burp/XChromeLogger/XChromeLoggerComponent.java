@@ -14,6 +14,11 @@ import de.omgwtfquak.burp.ui.table.BurpTableModel;
 import de.omgwtfquak.burp.ui.table.MultilineCellRenderer;
 import de.omgwtfquak.burp.ui.table.TooltipTableCellRenderer;
 
+/**
+ * {@link JPanel} containing {@link JTable} which renders {@link XChromeLogger} data
+ * 
+ * @author marko
+ */
 public class XChromeLoggerComponent extends JPanel {
 
   private final JScrollPane jScrollPane;
@@ -21,6 +26,11 @@ public class XChromeLoggerComponent extends JPanel {
   private final DefaultTableModel model;
   private static final long serialVersionUID = 4671429789840120389L;
 
+  /**
+   * Init a {@link JTable} in the {@link JPanel} with passed column names
+   * 
+   * @param columns
+   */
   public XChromeLoggerComponent(final Object[] columns) {
 
     this.model = new BurpTableModel();
@@ -38,6 +48,11 @@ public class XChromeLoggerComponent extends JPanel {
     this.add(jScrollPane, BorderLayout.CENTER);
   }
 
+  /**
+   * insert each {@link XChromeLoggerStruct} as row in the {@link JTable} of a {@link XChromeLogger}
+   * 
+   * @param data
+   */
   public void setTableXChromeLoggerData(final XChromeLogger data) {
 
     // first, remove all rows

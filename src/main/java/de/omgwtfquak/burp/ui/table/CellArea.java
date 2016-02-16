@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
@@ -15,25 +16,40 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import de.omgwtfquak.burp.XChromeLogger.Type;
+import de.omgwtfquak.burp.XChromeLogger.XChromeLogger;
 import de.omgwtfquak.burp.XChromeLogger.XChromeLoggerStruct;
 
+/**
+ * Cell from {@link DefaultTableCellRenderer} which perform auto sizing of the text of a {@link MultilineCellRenderer}
+ * 
+ * @author marko
+ */
 public class CellArea extends DefaultTableCellRenderer {
 
   private static final long serialVersionUID = 4370852586252846822L;
   private final String text;
-  protected int rowIndex;
-  protected int columnIndex;
+  protected int row;
+  protected int column;
   protected JTable table;
   protected Font font;
   private int paragraphStart, paragraphEnd;
   private LineBreakMeasurer lineMeasurer;
 
-  public CellArea(final Object o, final JTable tab, final int row, final int column, final boolean isSelected) {
-    text = o.toString();
-    rowIndex = row;
-    columnIndex = column;
-    table = tab;
-    font = table.getFont();
+  /**
+   * constructor
+   * 
+   * @param o
+   * @param table
+   * @param row
+   * @param column
+   * @param isSelected
+   */
+  public CellArea(final Object o, final JTable table, final int row, final int column, final boolean isSelected) {
+
+    this.text = o.toString();
+    this.row = row;
+    this.column = column;
+    this.table = table;
 
     if (o instanceof XChromeLoggerStruct)
       setForeground(getFontColorFromType(((XChromeLoggerStruct) o).getType()));
@@ -41,7 +57,7 @@ public class CellArea extends DefaultTableCellRenderer {
       setForeground(Color.BLACK);
 
     if (isSelected) {
-      setBackground(table.getSelectionBackground());
+      setBackground(this.table.getSelectionBackground());
     }
   }
 
@@ -51,13 +67,15 @@ public class CellArea extends DefaultTableCellRenderer {
     if (text != null && !text.isEmpty()) {
       Graphics2D g = (Graphics2D) gr;
       if (lineMeasurer == null) {
-        AttributedCharacterIterator paragraph = new AttributedString(text).getIterator();
+        AttributedString cellContent = new AttributedString(this.text);
+        cellContent.addAttribute(TextAttribute.FONT, this.font);
+        AttributedCharacterIterator paragraph = cellContent.getIterator();
         paragraphStart = paragraph.getBeginIndex();
         paragraphEnd = paragraph.getEndIndex();
         FontRenderContext frc = g.getFontRenderContext();
         lineMeasurer = new LineBreakMeasurer(paragraph, BreakIterator.getWordInstance(), frc);
       }
-      float breakWidth = table.getColumnModel().getColumn(columnIndex).getWidth();
+      float breakWidth = table.getColumnModel().getColumn(column).getWidth();
       float drawPosY = 0;
       lineMeasurer.setPosition(paragraphStart);
       while (lineMeasurer.getPosition() < paragraphEnd) {
@@ -67,10 +85,17 @@ public class CellArea extends DefaultTableCellRenderer {
         layout.draw(g, drawPosX, drawPosY);
         drawPosY += layout.getDescent() + layout.getLeading();
       }
-      table.setRowHeight(rowIndex, (int) drawPosY);
+      table.setRowHeight(row, (int) drawPosY);
     }
   }
 
+  /**
+   * get font color depeding on XChromeLogger {@link Type}
+   * 
+   * @param type
+   *          of {@link XChromeLogger}
+   * @return font color
+   */
   private Color getFontColorFromType(final Type type) {
 
     int color = 0x330000;
@@ -89,6 +114,5 @@ public class CellArea extends DefaultTableCellRenderer {
     }
 
     return new Color(color);
-
   }
 }

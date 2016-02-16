@@ -5,9 +5,9 @@ import java.io.PrintWriter;
 import burp.IBurpExtenderCallbacks;
 
 /**
- * Eigene Logger Klasse, welche in die BurpConsole schreibt
+ * Log class to write log data in burp ui output
  * 
- * @author mawn
+ * @author marko
  * 
  */
 public class Logger {
@@ -17,23 +17,39 @@ public class Logger {
   private static PrintWriter stderr;
 
   /**
-   * leerer Konstruktor, da Singleton
+   * empty constructor
    */
   private Logger(IBurpExtenderCallbacks callbacks) {
     stdout = new PrintWriter(callbacks.getStdout(), true);
     stderr = new PrintWriter(callbacks.getStderr(), true);
   }
 
+  /**
+   * get logger instance to write logger output
+   * 
+   * @param callbacks
+   * @return
+   */
   public static synchronized Logger getInstance(IBurpExtenderCallbacks callbacks) {
     if (log == null)
       Logger.log = new Logger(callbacks);
     return log;
   }
 
+  /**
+   * write to burp info log
+   * 
+   * @param message
+   */
   public static void infoLog(final String message) {
     stdout.println(message);
   }
 
+  /**
+   * write to burp error log
+   * 
+   * @param message
+   */
   public static void errorLog(final String message) {
     stderr.println(message);
   }

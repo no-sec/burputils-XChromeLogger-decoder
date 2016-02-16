@@ -49,11 +49,6 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.swinglabs</groupId>
-			<artifactId>swingx</artifactId>
-			<version>${swingx.version}</version>
-		</dependency>
 
 	</dependencies>
 

@@ -4,7 +4,10 @@ import de.omgwtfquak.burp.common.Logger;
 import de.omgwtfquak.burp.tab.XChromeLoggerTab;
 
 /**
- * @author mawn
+ * This BurpSuite extension adds a new tab in the HTTP message editor to display X-ChromeLogger-Data (see https://craig.is/writing/chrome-logger) in
+ * decoded form.
+ * 
+ * @author marko
  */
 public class BurpExtender implements IBurpExtender, IExtensionStateListener, IMessageEditorTabFactory {
 

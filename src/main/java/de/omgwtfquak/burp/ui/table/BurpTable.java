@@ -11,6 +11,11 @@ public class BurpTable extends JTable {
 
   private static final long serialVersionUID = -6629977763963849856L;
 
+  /**
+   * BurpTable renders the cells to perform auto sizing
+   * 
+   * @param model
+   */
   public BurpTable(DefaultTableModel model) {
     super(model);
   }

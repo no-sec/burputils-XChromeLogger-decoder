@@ -9,6 +9,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import de.omgwtfquak.burp.XChromeLogger.SourceFile;
 
+/**
+ * Cell renderer for a column with {@link SourceFile}s. Implements a ToolTip which contains the complete file path of the {@link SourceFile}
+ * 
+ * @author marko
+ */
 public class TooltipTableCellRenderer extends DefaultTableCellRenderer {
 
   private static final long serialVersionUID = -6301591703180986765L;

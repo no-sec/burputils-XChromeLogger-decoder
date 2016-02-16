@@ -47,10 +47,10 @@ public class XChromeLoggerStruct {
   }
 
   /**
-   * Bekomme XChromeLoggerStruct als {@link Object} mit der Reihenfolge:<br>
+   * get XChromeLoggerStruct as {@link Object} in following order:<br>
    * <ol>
-   * <li>data</li>
-   * <li>sourceFile</li>
+   * <li>{@link XChromeLoggerStruct}</li>
+   * <li>{@link SourceFile}</li>
    * <li>line</li>
    * </ol>
    * 
