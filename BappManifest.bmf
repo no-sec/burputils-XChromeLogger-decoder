@@ -1,6 +1,7 @@
 Uuid: a68f0a880362410baaf884ddb383fe4c
 ExtensionType: 1
 Name: XChromeLogger Decoder
+RepoName: xchromelogger-decoder
 ScreenVersion: 0.1
 SerialVersion: 2
 MinPlatformVersion: 0
