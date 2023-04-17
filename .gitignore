@@ -8,6 +8,7 @@ target/
 .svn/
 bin/
 dependency-reduced-pom.xml
+build.gradle
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
